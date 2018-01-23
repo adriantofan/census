@@ -1,0 +1,51 @@
+exports.up = (knex) => {
+  return knex.schema.createTable('census', (table) => {
+    table.integer('age');
+    table.string('class of worker', 1000);
+    table.string('industry code', 1000);
+    table.string('occupation code', 1000);
+    table.string('education', 1000);
+    table.string('wage per hour', 1000);
+    table.string('last education', 1000);
+    table.string('marital status', 1000);
+    table.string('major industry code', 1000);
+    table.string('major occupation code', 1000);
+    table.string('mace', 1000);
+    table.string('hispanice', 1000);
+    table.string('sex', 1000);
+    table.string('member of labor', 1000);
+    table.string('reason for unemployment', 1000);
+    table.string('fulltime', 1000);
+    table.string('capital gain', 1000);
+    table.string('capital loss', 1000);
+    table.string('dividends', 1000);
+    table.string('income tax liability', 1000);
+    table.string('previous residence region', 1000);
+    table.string('previous residence state', 1000);
+    table.string('household-with-family', 1000);
+    table.string('household-simple', 1000);
+    table.string('weight', 1000);
+    table.string('msa-change', 1000);
+    table.string('reg-change', 1000);
+    table.string('within-reg-change', 1000);
+    table.string('lived-here', 1000);
+    table.string('migration prev res in sunbelt', 1000);
+    table.string('num persons worked for employer', 1000);
+    table.string('family members under 118', 1000);
+    table.string('father birth country', 1000);
+    table.string('mother birth country', 1000);
+    table.string('birth country', 1000);
+    table.string('citizenship', 1000);
+    table.string('own business or self employed', 1000);
+    table.string('fill questionnaire for veteran\'s admin', 1000);
+    table.string('veterans benefits', 1000);
+    table.string('weeks worked in year', 1000);
+    table.string('year', 1000);
+    table.string('salary range', 1000);
+    // table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
+  });
+};
+
+exports.down = (knex) => {
+  return knex.schema.dropTable('census');
+};

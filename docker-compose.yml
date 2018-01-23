@@ -1,0 +1,65 @@
+version: '2.1'
+
+services:
+  swagger:
+    container_name: swagger
+    build: ./services/census/swagger/
+    volumes:
+      - './services/census/swagger:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3003:3001'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    depends_on:
+      census-service:
+        condition: service_started
+    links:
+      - census-service
+      
+  web-service:
+    container_name: web-service
+    build: ./services/web/
+    volumes:
+      - './services/web:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3007:3006'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    depends_on:
+      census-service:
+        condition: service_started
+    links:
+      - census-service
+
+  census-db:
+    container_name: census-d
+    build: ./services/census/src/db
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: exit 0
+      
+  census-service:
+    container_name: census-service
+    build: ./services/census/
+    volumes:
+      - './services/census:/usr/src/app'
+      - './services/census/package.json:/usr/src/package.json'
+    ports:
+      - '3000:3000' # expose ports - HOST:CONTAINER
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@census-db:5432/census_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@census-db:5432/census_test
+      - NODE_ENV=${NODE_ENV}
+      - DEBUG=server:*
+      - TOKEN_SECRET=changeme
+    depends_on:
+      census-db:
+        condition: service_healthy
+    links:
+      - census-db
