@@ -55,6 +55,10 @@ Ideally, share application URL.
 
     $ docker-compose up --build
     $ ./init_db.sh # to seed the db, it takes a long time
+# unit test     
+
+    $ docker-compose run web-service npm test # in another terminal
+
 # todo
 
 At minimum: 

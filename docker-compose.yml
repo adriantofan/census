@@ -34,7 +34,7 @@ services:
       - census-service
 
   census-db:
-    container_name: census-d
+    container_name: census-db
     build: ./services/census/src/db
     ports:
       - '5433:5432'
